@@ -24,7 +24,7 @@ deploy:
     image: mcr.microsoft.com/azure-cli
     stage: deploy
     script:
-      - az login --identity --username ab70a466-acc5-47e4-959a-7e17f21a8a17
+      - az login --tenant 12b4fbf9-dea8-4490-bede-9cc40309ad61 --use-device-code
       - az aks get-credentials --resource-group $RESOURCE_GROUP --name $AKS_CLUSTER_NAME --overwrite-existing
       - kubectl apply -f wisecow-deployment.yaml
       - kubectl apply -f wisecow-service.yaml
