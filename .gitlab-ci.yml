@@ -3,7 +3,7 @@
 # Define the stages of the pipeline
 stages:
   - build
-  - test
+  
 
 # Define the jobs for each stage
 build:
@@ -20,13 +20,3 @@ build:
   script:
     - docker build -t wisecow-image .
 
-test:
-  stage: test
-  image: wisecow-image
-
-  script:
-    - echo "Running tests..."
-    # Add your test commands here
-    # For example, if your script outputs certain text, you can use grep to check if it's present
-
-# Optionally, you can add more stages and jobs for deployment or other tasks
