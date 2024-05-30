@@ -1,0 +1,32 @@
+# This YAML file defines the CI/CD pipeline for building and testing the Docker image
+
+# Define the stages of the pipeline
+stages:
+  - build
+  - test
+
+# Define the jobs for each stage
+build:
+  stage: build
+  image: docker:stable
+
+  variables:
+    DOCKER_USER: priyanshiorufy
+    DOCKER_PASSWORD: orufy@123
+
+  services:
+    - docker:dind
+
+  script:
+    - docker build -t wisecow-image .
+
+test:
+  stage: test
+  image: wisecow-image
+
+  script:
+    - echo "Running tests..."
+    # Add your test commands here
+    # For example, if your script outputs certain text, you can use grep to check if it's present
+
+# Optionally, you can add more stages and jobs for deployment or other tasks
