@@ -24,7 +24,7 @@ deploy:
     image: mcr.microsoft.com/azure-cli
     stage: deploy
     script:
-      - az login --service-principal -u $CLIENT_ID -p $CLIENT_SECRET --tenant $TENANT_ID
+      - az login --service-principal -u mca25010.22@bitmesra.ac.in -p bitjpr@123 
       - az aks get-credentials --resource-group $RESOURCE_GROUP --name $AKS_CLUSTER_NAME --overwrite-existing
       - kubectl apply -f wisecow-deployment.yaml
       - kubectl apply -f wisecow-service.yaml
