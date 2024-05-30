@@ -3,7 +3,7 @@
 # Define the stages of the pipeline
 stages:
   - build
-  
+  - deploy
 
 # Define the jobs for each stage
 build:
@@ -19,4 +19,13 @@ build:
 
   script:
     - docker build -t wisecow-image .
+
+deploy:
+  stage: deploy
+  image: mcr.microsoft.com/azure-cli
+  script:
+    -az login -u $AZURE_EMAIL -p $AZURE_PASSWORD
+    -az aks get-credentials --resource-group $RESOURCE_GROUP_NAME --name $AKS_CLUSTER_NAME --overwrite-existing
+    -kubectl apply -f wisecow-deployment.yaml
+    -kubectl apply -f wisecow-service.yml
 
