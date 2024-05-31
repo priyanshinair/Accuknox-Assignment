@@ -35,5 +35,4 @@ deploy:
     - kubectl apply --validate=false -f wisecow-deployment.yaml
     - kubectl apply --validate=false -f wisecow-service.yaml
 
-  only:
-    - master
+  
