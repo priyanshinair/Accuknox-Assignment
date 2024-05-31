@@ -1,10 +1,10 @@
-# This YAML file defines the CI/CD pipeline for building and testing the Docker image
+# This YAML file defines the CI/CD pipeline for building, testing, and deploying the Wisecow application
 
 # Define the stages of the pipeline
 stages:
   - build
+  - validate
   - deploy
-  
 
 # Define the jobs for each stage
 build:
@@ -21,6 +21,20 @@ build:
   script:
     - docker build -t wisecow-app .
 
+validate:
+  stage: validate
+  image: alpine:latest
+
+  script:
+    # Install kubectl
+    - apk add --no-cache curl
+    - curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    - chmod +x kubectl
+    - mv kubectl /usr/local/bin/
+
+    # Validate Kubernetes manifest files
+    - kubectl apply --dry-run=client -f wisecow-deployment.yaml
+    - kubectl apply --dry-run=client -f wisecow-service.yaml
 
 deploy:
   stage: deploy
@@ -37,5 +51,5 @@ deploy:
     - kubectl apply -f wisecow-deployment.yaml
     - kubectl apply -f wisecow-service.yaml
 
- 
-
+  only:
+    - master
