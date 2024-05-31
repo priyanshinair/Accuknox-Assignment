@@ -16,4 +16,4 @@ spec:
       - name: wisecow
         image: wisecow-image
         ports:
-        - containerPort: 8080
+        - containerPort:3000
