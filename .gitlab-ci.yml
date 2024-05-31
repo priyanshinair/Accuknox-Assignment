@@ -3,7 +3,7 @@
 # Define the stages of the pipeline
 stages:
   - build
-  - deploy
+  
 
 # Define the jobs for each stage
 build:
@@ -18,16 +18,8 @@ build:
     - docker:dind
 
   script:
-    - docker build -t wisecow-image .
+    - docker build -t wisecow-app .
 
-deploy:
-    image: mcr.microsoft.com/azure-cli
-    stage: deploy
-    script:
-      - az login --tenant 12b4fbf9-dea8-4490-bede-9cc40309ad61 --use-device-code
-      - az aks install-cli
-      - az aks get-credentials --name AccuknoxTask --overwrite-existing --resource-group TASK
-      - kubectl apply -f wisecow-deployment.yaml
-      - kubectl apply -f wisecow-service.yaml
+
         
 
